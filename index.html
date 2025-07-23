@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flower waste management</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fefbe9 0%, #fff9ea 100%);
+      color: #3e2f1c;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Enhanced Navbar */
+    header#main-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(255, 240, 214, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 100;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid rgba(176, 94, 13, 0.1);
+    }
+
+    header#main-navbar.hide {
+      transform: translateY(-100%);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #b05e0d;
+      text-shadow: 0 2px 4px rgba(176, 94, 13, 0.1);
+    }
+
+    header nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: #5e4b32;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    header nav a:hover {
+      color: #b05e0d;
+      background-color: rgba(176, 94, 13, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Search and Account Container */
+    .search-account-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-bar {
+      position: relative;
+    }
+
+    .search-bar input {
+      padding: 0.7rem 1rem;
+      border-radius: 25px;
+      border: 2px solid #e0d5c7;
+      background: white;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      width: 200px;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #b05e0d;
+      box-shadow: 0 0 0 3px rgba(176, 94, 13, 0.1);
+      transform: scale(1.02);
+    }
+
+    .account-icon {
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: #5e4b32;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    .account-icon:hover {
+      color: #b05e0d;
+    }
+
+    /* Repositioned Sticky Bar */
+    #sticky-join-bar {
+      position: fixed;
+      top: 70px;
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(135deg, #ffecd2, #ffcc80);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      transform: translateY(0);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 90;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    #sticky-join-bar.hide {
+      transform: translateY(-100%);
+    }
+
+    #sticky-join-bar.slide-up {
+      top: 0;
+    }
+
+    #sticky-join-bar.auto-hide {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .sticky-left-text {
+      color: #4e3b1f;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .sticky-right-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #sticky-join-bar button {
+      padding: 0.6rem 1.5rem;
+      background: linear-gradient(135deg, #ff8c00, #f57c00);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    }
+
+    #sticky-join-bar button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    }
+
+    #sticky-join-bar a {
+      text-decoration: none;
+      color: #4e3b1f;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    #sticky-join-bar a:hover {
+      color: #b05e0d;
+    }
+
+    /* Hero Section */
+    .full-screen {
+      min-height: 100vh;
+      padding-top: 120px;
+      text-align: center;
+      background: linear-gradient(135deg, #fff9ea 0%, #ffecd2 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .main-heading {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #3e2f1c;
+      margin-bottom: 2rem;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease-out;
+      max-width: 800px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .hero img.float-left {
+      position: absolute;
+      left: 5%;
+      bottom: 15%;
+      width: clamp(100px, 15vw, 180px);
+      animation: floatLeft 1.2s ease-out;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    }
+
+    .hero img.float-right {
+      position: absolute;
+      right: 5%;
+      bottom: 15%;
+      width: clamp(100px, 15vw, 180px);
+      animation: floatRight 1.2s ease-out;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    }
+
+    /* Compact Floating Sections - ALL SECTIONS MADE SMALLER */
+    .floating-section {
+      min-height: 80vh;
+      background: white;
+      margin: 15px auto;
+      width: min(80%, 750px);
+      border-radius: 12px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .floating-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8c00, #f57c00, #b05e0d);
+    }
+
+    .floating-section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 55px rgba(0,0,0,0.12);
+    }
+
+    .floating-section h2 {
+      font-size: 2rem;
+      color: #3e2f1c;
+      margin-bottom: 0.8rem;
+      text-align: center;
+    }
+
+    .floating-section p {
+      font-size: 1rem;
+      color: #5e4b32;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Compact Impact Section */
+    #impact {
+      min-height: 80vh;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: visible;
+      width: min(100%, 750px);
+      margin: 15px auto;
+      padding: 2rem 1.8rem;
+    }
+
+    #impact.expanded {
+      width: min(85%, 950px);
+      min-height: 70vh;
+      padding: 1.8rem 1.5rem;
+      margin: 15px auto;
+    }
+
+    #impact h2 {
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      top: 0;
+      left: 0;
+      margin-bottom: 1rem;
+      z-index: 10;
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    #impact.expanded h2 {
+      font-size: 1.6rem;
+      text-align: left;
+      position: absolute;
+      top: 0.8rem;
+      left: 1.2rem;
+      margin: 0;
+      opacity: 1;
+      transform: translateX(0);
+      animation: slideToLeft 0.8s ease-out;
+    }
+
+    /* Animation for title moving to left */
+    @keyframes slideToLeft {
+      0% {
+        transform: translateX(200px);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Compact Counter Styling */
+    .counters {
+      display: flex;
+      gap: 0.8rem;
+      margin: 1rem 0 0.8rem 0;
+      height: 200px;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+    }
+
+    #impact.expanded .counters {
+      margin-top: 2.5rem;
+      height: 240px;
+      padding: 0;
+    }
+
+    .counter-box {
+      background: linear-gradient(135deg, #fff9ea, #ffecd2);
+      padding: 0.8rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      pointer-events: auto;
+    }
+
+    .counter-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .counter-box.compressed {
+      flex: 0.15;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .counter-box.expanded {
+      flex: 4;
+      padding: 0.8rem;
+    }
+
+    .counter-content {
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      gap: 0.6rem;
+    }
+
+    .counter-box.expanded .counter-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+      padding-top: 0.3rem;
+      gap: 1rem;
+    }
+
+    .counter-text {
+      flex: 1;
+      text-align: center;
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .counter-box.expanded .counter-text {
+      text-align: left;
+      padding-left: 0;
+      max-width: 180px;
+      flex: 0 0 180px;
+    }
+
+    .counter-box span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #b05e0d;
+      display: block;
+      margin-bottom: 0.2rem;
+      transition: all 0.8s ease;
+    }
+
+    .counter-box.expanded span {
+      font-size: 1.5rem;
+    }
+
+    .counter-description {
+      font-size: 0.8rem;
+      color: #5e4b32;
+      margin-bottom: 0.3rem;
+    }
+
+    .counter-box.expanded .counter-description {
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Gallery Info in Expanded Text Section */
+    .gallery-info {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.8s ease;
+      margin-top: 0.3rem;
+    }
+
+    .counter-box.expanded .gallery-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #3e2f1c;
+      margin-bottom: 0.2rem;
+    }
+
+    .gallery-description {
+      font-size: 0.65rem;
+      color: #5e4b32;
+      line-height: 1.1;
+    }
+
+    /* Compact Photo Gallery */
+    .photo-gallery {
+      width: 0;
+      height: 170px;
+      background: #f8f8f8;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      flex: 0;
+    }
+
+    .counter-box.expanded .photo-gallery {
+      opacity: 1;
+      width: 200px;
+      flex: 0 0 200px;
+    }
+
+    .gallery-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .gallery-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .gallery-slide.active {
+      opacity: 1;
+    }
+
+    .gallery-slide.placeholder {
+      background: linear-gradient(135deg, #e8e8e8, #f5f5f5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #999;
+    }
+
+    /* Gallery Controls */
+    .gallery-controls {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4px;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-gallery:hover .gallery-controls {
+      opacity: 1;
+    }
+
+    .gallery-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .gallery-dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .photo-gallery:hover .gallery-arrow {
+      opacity: 1;
+    }
+
+    .gallery-arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .gallery-arrow.prev {
+      left: 5px;
+    }
+
+    .gallery-arrow.next {
+      right: 5px;
+    }
+
+    /* Compact Join Button */
+    .join-section button {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #ff8c00, #f57c00);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 45px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(245, 124, 0, 0.3);
+      align-self: center;
+    }
+
+    .join-section button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(245, 124, 0, 0.4);
+      background: linear-gradient(135deg, #f57c00, #e65100);
+    }
+
+    /* Footer Section */
+    .footer {
+      background: linear-gradient(135deg, #3e2f1c, #5e4b32);
+      color: #fff9ea;
+      padding: 3rem 2rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-section h3 {
+      color: #ffecd2;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+      color: #fff9ea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .footer-section ul li a:hover {
+      color: #ffecd2;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 140, 0, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffecd2;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: #ff8c00;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 140, 0, 0.2);
+      margin-top: 2rem;
+      padding-top: 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #e0d5c7;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #ff8c00, #f57c00);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes floatRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .floating-section {
+        width: min(85%, 700px);
+        padding: 1.8rem 1.5rem;
+      }
+
+      #impact {
+        width: min(85%, 700px);
+        min-height: 32vh;
+      }
+      
+      #impact.expanded {
+        width: min(88%, 900px);
+        min-height: 36vh;
+      }
+      
+      .counter-box.expanded .photo-gallery {
+        width: 170px;
+        flex: 0 0 170px;
+        height: 150px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header#main-navbar {
+        padding: 0 1rem;
+        height: 60px;
+      }
+
+      header nav {
+        display: none;
+      }
+
+      .search-bar input {
+        width: 150px;
+        font-size: 0.8rem;
+      }
+
+      #sticky-join-bar {
+        top: 60px;
+        padding: 0 1rem;
+        flex-direction: column;
+        height: auto;
+        padding: 0.5rem 1rem;
+      }
+
+      .sticky-left-text {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .sticky-right-buttons {
+        gap: 0.5rem;
+      }
+
+      .floating-section {
+        width: 90%;
+        padding: 1.5rem 1.2rem;
+        margin: 12px auto;
+        min-height: 30vh;
+      }
+
+      .floating-section h2 {
+        font-size: 1.8rem;
+      }
+
+      .floating-section p {
+        font-size: 0.95rem;
+      }
+
+      .counter-box span {
+        font-size: 1.5rem;
+      }
+
+      .counters {
+        flex-direction: column;
+        height: auto;
+        gap: 0.6rem;
+        padding: 0;
+      }
+
+      .counter-box.compressed,
+      .counter-box.expanded {
+        flex: none;
+      }
+
+      .counter-box.expanded .counter-content {
+        flex-direction: column;
+        gap: 0.6rem;
+        align-items: center;
+      }
+
+      .counter-box.expanded .counter-text {
+        text-align: center;
+        max-width: none;
+        flex: none;
+      }
+
+      .counter-box.expanded .photo-gallery {
+        width: 100%;
+        height: 170px;
+        flex: none;
+      }
+
+      #impact {
+        width: 90%;
+        min-height: 30vh;
+      }
+
+      #impact.expanded {
+        width: 95%;
+        margin: 12px auto;
+        min-height: 32vh;
+      }
+
+      #impact.expanded h2 {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .back-to-top {
+        bottom: 1rem;
+        left: 1rem;
+        width: 45px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-heading {
+        padding: 0 1rem;
+      }
+
+      .hero img.float-left,
+      .hero img.float-right {
+        display: none;
+      }
+
+      .floating-section {
+        width: 95%;
+        min-height: 28vh;
+      }
+
+      #impact {
+        min-height: 28vh;
+      }
+
+      #impact.expanded {
+        min-height: 30vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Top Navbar -->
+  <header id="main-navbar">
+    <div class="logo">AKRIVYA</div>
+    <nav>
+      <a>Home</a>
+      <a>Services</a>
+      <a>Products</a>
+      <a>Community</a>
+      <a>Support</a>
+      <a>About Us</a>
+    </nav>
+    <div class="search-account-wrapper">
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="account-icon" title="Account">👤</div>
+    </div>
+  </header>
+
+  <!-- Repositioned Sticky Join Banner -->
+  <div id="sticky-join-bar">
+    <div class="sticky-left-text">Join the movement to save Dharma & Earth</div>
+    <div class="sticky-right-buttons">
+      <button>Join</button>
+      <a href="#join">Overview</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero full-screen" id="hero">
+    <h1 class="main-heading">Preserving Dharma through Responsible Disposal</h1>
+    <div style="width: 150px; height: 150px; background: linear-gradient(45deg, #ff6b6b, #ffa726); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: absolute; left: 5%; bottom: 15%;">🌸</div>
+    <div style="width: 150px; height: 150px; background: linear-gradient(45deg, #42a5f5, #26c6da); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: absolute; right: 5%; bottom: 15%;">💧</div>
+  </section>
+
+  <!-- Enhanced Impact Section -->
+  <section class="floating-section" id="impact">
+    <h2>Our Impact</h2>
+    <div class="counters">
+      <div class="counter-box" id="flowers-counter">
+        <div class="counter-content">
+          <div class="counter-text">
+            <span id="flower-kg">0</span>
+            <div class="counter-description">kg flowers processed</div>
+            <div class="gallery-info">
+              <div class="gallery-title">Flower Collection Process</div>
+              <div class="gallery-description">Witness our dedicated team collecting sacred flowers from temples and transforming them into eco-friendly products through sustainable processing methods.</div>
+            </div>
+          </div>
+          <div class="photo-gallery">
+            <div class="gallery-container">
+              <div class="gallery-slide active placeholder">🌸</div>
+              <div class="gallery-slide placeholder">♻️</div>
+              <div class="gallery-slide placeholder">🌱</div>
+            </div>
+            <button class="gallery-arrow prev">‹</button>
+            <button class="gallery-arrow next">›</button>
+            <div class="gallery-controls">
+              <div class="gallery-dot active" data-slide="0"></div>
+              <div class="gallery-dot" data-slide="1"></div>
+              <div class="gallery-dot" data-slide="2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="counter-box" id="donations-counter">
+        <div class="counter-content">
+          <div class="counter-text">
+            <span id="donations">0</span>
+            <div class="counter-description">community donations</div>
+            <div class="gallery-info">
+              <div class="gallery-title">Community Engagement</div>
+              <div class="gallery-description">Our growing community of donors and volunteers actively participate in preserving dharmic traditions while protecting our environment for future generations.</div>
+            </div>
+          </div>
+          <div class="photo-gallery">
+            <div class="gallery-container">
+              <div class="gallery-slide active placeholder">🤝</div>
+              <div class="gallery-slide placeholder">💝</div>
+              <div class="gallery-slide placeholder">🌍</div>
+            </div>
+            <button class="gallery-arrow prev">‹</button>
+            <button class="gallery-arrow next">›</button>
+            <div class="gallery-controls">
+              <div class="gallery-dot active" data-slide="0"></div>
+              <div class="gallery-dot" data-slide="1"></div>
+              <div class="gallery-dot" data-slide="2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="floating-section" id="capabilities">
+    <h2>The meaning of Akrivya</h2>
+    <p>Akrivya (अक्रीय / अक्रिव्य)
+"The noble force that acts with purpose and spreads compassion, change, and service."</p>
+<p>or in poetic form:
+Akrivya = Action with depth, movement with meaning.</p>
+  </section>
+
+  <!-- Mission -->
+  <section class="floating-section" id="mission">
+    <h2>Our Mission</h2>
+    <p>"Akrivya is not just a name — it's a philosophy. Born from the roots of action ('kri') and the spirit of expansion ('vya'), Akrivya stands for meaningful work, silent transformation, and collective sewa. We act, not for applause — but for impact."</p>
+    <p>From holy to helpful: Converting pooja waste into purpose. We bridge ancient wisdom with modern sustainability, ensuring that offerings made with devotion continue to serve creation through responsible disposal and transformation.</p>
+  </section>
+
+  <!-- Join Us -->
+  <section class="floating-section join-section" id="join">
+    <h2>Be the Change</h2>
+    <p>Every flower, every offering can make a difference. Join thousands who are already transforming how we honor both our traditions and our planet.</p>
+    <button id="main-join-button" onclick="alert('Welcome to the movement! 🌸')">Join the Movement</button>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About Akrivya</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Settings</a></li>
+          <li><a href="#">GDPR Compliance</a></li>
+          <li><a href="#">Disclaimer</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Community Forum</a></li>
+          <li><a href="#">Report Issue</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="mailto:contact@akrivya.com">contact@akrivya.com</a></li>
+          <li><a href="tel:+911234567890">+91 123 456 7890</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+        <div class="social-icons">
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="Twitter">🐦</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="YouTube">📺</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Akrivya Pvt Ltd. All rights reserved. | Designed with ❤️ for sustainability</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+  <script>
+    // Enhanced scroll listener with performance optimization
+    let isScrolling = false;
+    let autoHideTimer = null;
+    let hoverTimeout = null;
+    let currentExpandedBox = null;
+    let isTransitioning = false;
+    
+    function autoHideJoinBar() {
+      const stickyBar = document.getElementById('sticky-join-bar');
+      clearTimeout(autoHideTimer);
+      
+      // Remove auto-hide immediately when scrolling
+      stickyBar.classList.remove('auto-hide');
+      
+      // Set timer to auto-hide after 3 seconds of no scrolling
+      autoHideTimer = setTimeout(() => {
+        if (!stickyBar.classList.contains('hide')) {
+          stickyBar.classList.add('auto-hide');
+        }
+      }, 3000);
+    }
+    
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (!isScrolling) {
+        window.requestAnimationFrame(() => {
+          const heroHeight = document.getElementById('hero').offsetHeight;
+          const nav = document.getElementById('main-navbar');
+          const stickyBar = document.getElementById('sticky-join-bar');
+          const mainJoinButton = document.getElementById('main-join-button');
+          
+          // Show/hide back to top button
+          if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+          } else {
+            backToTopButton.classList.remove('visible');
+          }
+          
+          // Hide main navbar after hero section and slide sticky bar up
+          if (window.scrollY > heroHeight - 150) {
+            nav.classList.add('hide');
+            stickyBar.classList.add('slide-up');
+          } else {
+            nav.classList.remove('hide');
+            stickyBar.classList.remove('slide-up');
+          }
+          
+          // Check if the main join button is visible
+          const buttonRect = mainJoinButton.getBoundingClientRect();
+          const isButtonVisible = buttonRect.top < window.innerHeight && buttonRect.bottom > 0;
+          
+          // Hide sticky bar when the main join button becomes visible
+          if (isButtonVisible) {
+            stickyBar.classList.add('hide');
+            clearTimeout(autoHideTimer);
+          } else {
+            stickyBar.classList.remove('hide');
+            autoHideJoinBar(); // Start auto-hide timer
+          }
+          
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
+    });
+
+    // Back to top button click handler
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Enhanced counter animation with easing
+    function animateCounter(id, target) {
+      const element = document.getElementById(id);
+      const duration = 2000; // 2 seconds
+      const startTime = performance.now();
+      
+      function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeOut * target);
+        
+        element.textContent = current.toLocaleString();
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        }
+      }
+      
+      requestAnimationFrame(updateCounter);
+    }
+
+    // Intersection Observer for counter animation
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter("flower-kg", 2480);
+          animateCounter("donations", 520);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Improved Impact Section Interactions with Delays
+    const impactSection = document.getElementById('impact');
+    const flowersCounter = document.getElementById('flowers-counter');
+    const donationsCounter = document.getElementById('donations-counter');
+
+    function resetCounters() {
+      if (isTransitioning) return;
+      
+      flowersCounter.classList.remove('expanded', 'compressed');
+      donationsCounter.classList.remove('expanded', 'compressed');
+      impactSection.classList.remove('expanded');
+      currentExpandedBox = null;
+    }
+
+    function expandBox(targetBox, otherBox) {
+      if (isTransitioning || currentExpandedBox === targetBox) return;
+      
+      clearTimeout(hoverTimeout);
+      isTransitioning = true;
+      
+      // Reset first
+      resetCounters();
+      
+      // Short delay to allow reset animation
+      setTimeout(() => {
+        currentExpandedBox = targetBox;
+        impactSection.classList.add('expanded');
+        targetBox.classList.add('expanded');
+        otherBox.classList.add('compressed');
+        
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 800); // Match CSS transition duration
+      }, 50);
+    }
+
+    // Enhanced hover handling with delays
+    flowersCounter.addEventListener('mouseenter', (e) => {
+      e.stopPropagation();
+      clearTimeout(hoverTimeout);
+      
+      hoverTimeout = setTimeout(() => {
+        if (!isTransitioning) {
+          expandBox(flowersCounter, donationsCounter);
+        }
+      }, 200); // 200ms delay before expansion
+    });
+
+    donationsCounter.addEventListener('mouseenter', (e) => {
+      e.stopPropagation();
+      clearTimeout(hoverTimeout);
+      
+      hoverTimeout = setTimeout(() => {
+        if (!isTransitioning) {
+          expandBox(donationsCounter, flowersCounter);
+        }
+      }, 200); // 200ms delay before expansion
+    });
+
+    // Handle leaving individual boxes
+    flowersCounter.addEventListener('mouseleave', (e) => {
+      clearTimeout(hoverTimeout);
+      
+      // Check if mouse is moving to the other counter or outside impact section
+      if (!impactSection.contains(e.relatedTarget) || 
+          (e.relatedTarget && !flowersCounter.contains(e.relatedTarget) && !donationsCounter.contains(e.relatedTarget))) {
+        hoverTimeout = setTimeout(() => {
+          if (!isTransitioning) {
+            resetCounters();
+          }
+        }, 300);
+      }
+    });
+
+    donationsCounter.addEventListener('mouseleave', (e) => {
+      clearTimeout(hoverTimeout);
+      
+      // Check if mouse is moving to the other counter or outside impact section
+      if (!impactSection.contains(e.relatedTarget) || 
+          (e.relatedTarget && !donationsCounter.contains(e.relatedTarget) && !flowersCounter.contains(e.relatedTarget))) {
+        hoverTimeout = setTimeout(() => {
+          if (!isTransitioning) {
+            resetCounters();
+          }
+        }, 300);
+      }
+    });
+
+    // Final safety net - reset when leaving impact section entirely
+    impactSection.addEventListener('mouseleave', (e) => {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(() => {
+        if (!isTransitioning) {
+          resetCounters();
+        }
+      }, 200);
+    });
+
+    // Photo Gallery Functionality with Faster Speed
+    function initGallery(counterBox) {
+      const slides = counterBox.querySelectorAll('.gallery-slide');
+      const dots = counterBox.querySelectorAll('.gallery-dot');
+      const prevBtn = counterBox.querySelector('.gallery-arrow.prev');
+      const nextBtn = counterBox.querySelector('.gallery-arrow.next');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+      }
+
+      function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      }
+
+      function prevSlide() {
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+      }
+
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+      });
+
+      // Faster auto-slide every 2.5 seconds when expanded
+      let autoSlideInterval;
+      
+      counterBox.addEventListener('mouseenter', () => {
+        if (counterBox.classList.contains('expanded')) {
+          autoSlideInterval = setInterval(nextSlide, 2500); // Reduced from 4000ms to 2500ms
+        }
+      });
+
+      counterBox.addEventListener('mouseleave', () => {
+        clearInterval(autoSlideInterval);
+      });
+    }
+
+    // Initialize galleries
+    initGallery(flowersCounter);
+    initGallery(donationsCounter);
+
+    // Start observing when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const impactSection = document.getElementById('impact');
+      observer.observe(impactSection);
+    });
+  </script>
+</body>
+</html>
