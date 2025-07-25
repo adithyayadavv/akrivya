@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akrivya Login / Signup</title>
+  <style>
+    :root {
+      --orange: #ff8c00;
+      --orange-dark: #e65100;
+      --cream: #fff9ea;
+      --tan: #ffecd2;
+      --brown: #3e2f1c;
+    }
+    * { box-sizing: border-box; padding: 0; margin: 0;}
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--cream) 0%, var(--tan) 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--brown);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-container, .signup-container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 40px rgba(255,140,0,0.07), 0 1.5px 4px rgba(62,47,28,0.08);
+      max-width: 380px; width: 100%;
+      animation: fadeInPop 0.9s cubic-bezier(.42,0,.58,1) both;
+    }
+    @keyframes fadeInPop {
+      0% { opacity: 0; transform: translateY(40px) scale(.97);}
+      100% { opacity: 1; transform: none;}
+    }
+    .hidden { display: none;}
+    .brand-logo {
+      display: flex; align-items: center; gap: 0.7rem; justify-content: center;
+      margin-bottom: 1.8rem; font-size: 1.8rem; color: var(--orange); font-weight: bold; letter-spacing: 1px;
+    }
+    .brand-logo span {
+      font-size: 2.3rem; animation: logoSpin 2s infinite linear alternate;
+    }
+    @keyframes logoSpin {
+      0% {transform: rotate(-8deg);}
+      100% {transform: rotate(8deg);}
+    }
+    .login-title, .signup-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--brown);
+      letter-spacing: .6px;
+      line-height: 1.25;
+    }
+    form { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 1rem;}
+    .input-group { display: flex; flex-direction: column; gap: .15rem; position: relative;}
+    .input-group label {
+      color: #b05e0d; font-size: 0.94rem; font-weight: 500; margin-left: 0.2rem; margin-bottom: 0.2rem;
+    }
+    .input-group input {
+      padding: 0.8rem 1rem; border-radius: 13px; border: 1.5px solid #ffe1ba; background: #fff9f1;
+      font-size: 1rem; color: var(--brown);
+      box-shadow: 0 2.5px 10px rgba(255,140,0,0.03); outline: none;
+      transition: border-color 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    .input-group input:focus { border-color: var(--orange); background: #fffbe9;}
+    .show-password {
+      position: absolute; right: 12px; top: 57%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: #ffae40; font-size: 1.25rem; padding: 0; line-height: 1;
+    }
+    .forgot-password {
+      text-align: right; display: block; margin-top: -0.85rem; margin-bottom: 0.7rem;
+      font-size: .92rem; color: var(--orange); text-decoration: none; transition: color 0.2s;
+    }
+    .forgot-password:hover { color: var(--orange-dark); text-decoration: underline;}
+    .cta-btn {
+      display: block; width: 100%;
+      background: linear-gradient(135deg, var(--orange) 40%, var(--orange-dark) 100%);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 0.8rem; margin-bottom: 0.6rem;
+      box-shadow: 0 6px 19px rgba(255,140,0,0.11);
+      transition: all 0.16s cubic-bezier(.34,1.5,.64,1);
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      filter: brightness(1.08);
+      transform: translateY(-2.5px) scale(1.03);
+      box-shadow: 0 10px 28px rgba(255,140,0,0.17);
+    }
+    .login-footer, .signup-footer {
+      text-align: center;
+      margin-top: 1.65rem;
+      font-size: 0.94rem;
+      color: #7f6247;
+    }
+    .login-footer a, .signup-footer a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 3px;
+      transition: color 0.17s cubic-bezier(.34,1.5,.64,1);
+      cursor:pointer;
+    }
+    .login-footer a:hover, .signup-footer a:hover {color:var(--orange-dark);}
+    .divider {
+      margin: 1.2rem 0 0.8rem;
+      position: relative;
+      text-align: center;
+    }
+    .divider:before,.divider:after {
+      content: ''; position: absolute; top: 50%; width: 45%; max-width: 150px; height: 1px; background: #fcd094;
+    }
+    .divider:before { left: 0;}
+    .divider:after { right: 0;}
+    .divider span{color: #b05e0d; background: #fff; padding: 0 17px; font-size: 0.96rem;}
+    .social-login-btns {
+      display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.2rem;
+    }
+    .social-btn {
+      border: none; background: #ffe6c5; color: #a35500;
+      border-radius: 50%; width: 42px; height: 42px; cursor: pointer; font-size: 1.25rem;
+      transition: background 0.16s, color 0.16s; box-shadow: 0 1.5px 7px rgba(255,140,0,0.07);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .social-btn:hover { background: var(--orange); color: #fff;}
+    .success-msg {
+      color: #2e7d32; text-align: center; padding: 0.3rem 0; font-size: 1.07rem;
+      background: #eafaec; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #c5e7ce;
+      display: none;
+    }
+    @media (max-width: 500px) {
+      .login-container, .signup-container {padding: 2rem 0.7rem;}
+      .brand-logo {font-size: 1.2rem;}
+    }
+  </style>
+</head>
+<body>
+<main>
+  <!-- Login Form -->
+  <div id="loginForm" class="login-container">
+    <div class="brand-logo">
+      <span>🌸</span> AKRIVYA
+    </div>
+    <div class="login-title">Welcome back.<br>Login to your account</div>
+    <form autocomplete="on" onsubmit="event.preventDefault();alert('Logged in!');">
+      <div class="input-group">
+        <label for="login-email">Email / Username</label>
+        <input type="text" id="login-email" name="email" required autocomplete="username" placeholder="you@akrivya.com">
+      </div>
+      <div class="input-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="********">
+        <button type="button" class="show-password" tabindex="-1" aria-label="Show password" onclick="togglePassword('login-password', this)">👁️</button>
+      </div>
+      <a href="#" class="forgot-password">Forgot password?</a>
+      <button class="cta-btn" type="submit">Sign In</button>
+    </form>
+    <div class="divider"><span>or</span></div>
+    <div class="social-login-btns">
+      <button class="social-btn" title="Sign in with Google">G</button>
+      <button class="social-btn" title="Sign in with Facebook">f</button>
+      <button class="social-btn" title="Sign in with Apple"></button>
+    </div>
+    <div class="login-footer">
+      New to Akrivya?
+      <a id="toSignupBtn">Create an account</a>
+    </div>
+  </div>
+
+  <!-- Signup Form -->
+  <div id="signupForm" class="signup-container hidden">
+    <div class="brand-logo">
+      <span>🌸</span> AKRIVYA
+    </div>
+    <div class="signup-title">Create your account</div>
+    <form autocomplete="on" id="form-signup">
+      <div class="input-group">
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" name="name" required placeholder="eg. Priya Sharma">
+      </div>
+      <div class="input-group">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" required autocomplete="username" placeholder="you@akrivya.com">
+      </div>
+      <div class="input-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required autocomplete="new-password" placeholder="Create password">
+        <button type="button" class="show-password" tabindex="-1" aria-label="Show password" onclick="togglePassword('signup-password', this)">👁️</button>
+      </div>
+      <div class="input-group">
+        <label for="signup-confirm">Confirm Password</label>
+        <input type="password" id="signup-confirm" name="confirm" required autocomplete="new-password" placeholder="Repeat password">
+        <button type="button" class="show-password" tabindex="-1" aria-label="Show password" onclick="togglePassword('signup-confirm', this)">👁️</button>
+      </div>
+      <div id="signupSuccess" class="success-msg"></div>
+      <button class="cta-btn" type="submit">Sign Up</button>
+    </form>
+    <div class="signup-footer">
+      Already have an account?
+      <a id="toLoginBtn">Back to Login</a>
+    </div>
+  </div>
+</main>
+<script>
+  // Switch forms
+  document.getElementById('toSignupBtn').onclick = function(){
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+  }
+  document.getElementById('toLoginBtn').onclick = function(){
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+  }
+
+  // Show/hide password
+  function togglePassword(id, el){
+    const input = document.getElementById(id);
+    if(input.type === 'password'){
+      input.type = 'text';
+      el.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      el.textContent = '👁️';
+    }
+  }
+
+  // Signup submit handler
+  document.getElementById('form-signup').onsubmit = function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('signup-name').value.trim();
+    var email = document.getElementById('signup-email').value.trim();
+    var pass = document.getElementById('signup-password').value;
+    var confirm = document.getElementById('signup-confirm').value;
+    var msg = document.getElementById('signupSuccess');
+    if(pass !== confirm) {
+      msg.textContent = "Passwords do not match!";
+      msg.style.display = 'block';
+      msg.style.background='#ffeaea';
+      msg.style.color='#c82333';
+      msg.style.border='1px solid #ffd6d6';
+      return;
+    }
+    msg.style.background = "#eafaec";
+    msg.style.color = "#2e7d32";
+    msg.style.border="1px solid #c5e7ce";
+    msg.textContent = "Account created successfully! Redirecting to login...";
+    msg.style.display = 'block';
+    setTimeout(function(){
+      // Switch back to login
+      document.getElementById('signupForm').classList.add('hidden');
+      document.getElementById('loginForm').classList.remove('hidden');
+      msg.textContent = '';
+      msg.style.display = 'none';
+      // Optionally, pre-fill email
+      document.getElementById('login-email').value = email;
+    }, 1400);
+  }
+</script>
+</body>
+</html>
