@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akrivya - Account Details</title>
+  <style>
+    :root {
+      --orange: #ff8c00;
+      --orange-dark: #e65100;
+      --cream: #fff9ea;
+      --tan: #ffecd2;
+      --brown: #3e2f1c;
+      --gray-light: #f8f3ec;
+      --gray-dark: #5e4b32;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--cream) 0%, var(--tan) 100%);
+      color: var(--brown);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 240, 214, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(245, 124, 0, 0.15);
+      border: 1px solid rgba(176, 94, 13, 0.1);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--orange-dark);
+      cursor: default;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: var(--brown);
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      user-select: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header nav a:hover {
+      background: var(--orange);
+      color: white;
+      box-shadow: 0 8px 25px rgba(245, 124, 0, 0.3);
+    }
+
+    main.account-details {
+      background: white;
+      width: 100%;
+      max-width: 800px;
+      border-radius: 15px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+      padding: 3rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+
+    main.account-details h2 {
+      font-size: 2rem;
+      color: var(--orange-dark);
+      margin-bottom: 1rem;
+      border-bottom: 3px solid var(--orange);
+      padding-bottom: 0.3rem;
+    }
+
+    .user-info {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem 2rem;
+      max-width: 600px;
+    }
+
+    .user-info label {
+      font-weight: 700;
+      color: var(--brown);
+      align-self: center;
+    }
+
+    .user-info div.value {
+      background: var(--gray-light);
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #e6d8b5;
+      color: var(--gray-dark);
+      user-select: text;
+      font-size: 1rem;
+    }
+
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, var(--orange), var(--orange-dark));
+      margin: 2rem 0;
+      border-radius: 2px;
+    }
+
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .logout-btn {
+      padding: 0.8rem 2.5rem;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: white;
+      border: none;
+      border-radius: 45px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(245, 124, 0, 0.3);
+      transition: all 0.3s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .logout-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(245, 124, 0, 0.5);
+      background: linear-gradient(135deg, var(--orange-dark), #cc5200);
+    }
+
+    .logout-btn {
+      background: #b05e0d;
+      box-shadow: 0 6px 20px rgba(176, 94, 13, 0.5);
+    }
+
+    .logout-btn:hover {
+      background: #803c00;
+      box-shadow: 0 10px 30px rgba(176, 94, 13, 0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      main.account-details {
+        padding: 2rem 1.5rem;
+      }
+      .user-info {
+        grid-template-columns: 1fr;
+      }
+      .user-info label {
+        padding-bottom: 0.3rem;
+      }
+      button,
+      .logout-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">AKRIVYA</div>
+    <nav>
+      <a href="events.html">Events</a>
+      <a href="community.html">Community</a>
+      <a href="profile.html" aria-current="page">My Account</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <main class="account-details" role="main" aria-label="User Account Details">
+    <h2>My Account</h2>
+
+    <div class="user-info" aria-live="polite">
+      <label for="user-name">Full Name</label>
+      <div id="user-name" class="value" tabindex="0">Priya Sharma</div>
+
+      <label for="user-email">Email</label>
+      <div id="user-email" class="value" tabindex="0">priya.sharma@example.com</div>
+
+      <label for="user-phone">Phone Number</label>
+      <div id="user-phone" class="value" tabindex="0">+91 98765 43210</div>
+
+      <label for="user-joined">Member Since</label>
+      <div id="user-joined" class="value" tabindex="0">March 3, 2024</div>
+
+      <label for="user-volunteer-hours">Volunteer Hours</label>
+      <div id="user-volunteer-hours" class="value" tabindex="0">56 hours</div>
+
+      <label for="user-certificates">Certificates Earned</label>
+      <div id="user-certificates" class="value" tabindex="0">
+        Temple Cleanup - 2024<br />
+        Coastal Conservation - 2024
+      </div>
+    </div>
+
+    <div class="section-divider" role="separator"></div>
+
+    <h2>Settings & Actions</h2>
+    <div class="actions">
+      <button onclick="alert('Edit Profile functionality coming soon!')">Edit Profile</button>
+      <button onclick="alert('Change Password functionality coming soon!')">Change Password</button>
+      <button onclick="alert('View Volunteer History coming soon!')">Volunteer History</button>
+      <button class="logout-btn" onclick="alert('Logging out...'); window.location.href = 'login.html';">Logout</button>
+    </div>
+  </main>
+</body>
+</html>
