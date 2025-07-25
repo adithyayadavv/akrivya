@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Events - AKRIVYA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fefbe9 0%, #fff9ea 100%);
+      color: #3e2f1c;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 240, 214, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid rgba(176, 94, 13, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #b05e0d;
+      text-shadow: 0 2px 4px rgba(176, 94, 13, 0.1);
+    }
+
+    .back-btn {
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, #ff8c00, #f57c00);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+    }
+
+    /* Hero Section */
+    .events-hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #fff9ea 0%, #ffecd2 100%);
+    }
+
+    .events-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #3e2f1c;
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .events-hero p {
+      font-size: 1.2rem;
+      color: #5e4b32;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    /* Events Grid */
+    .events-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .event-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    .event-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8c00, #f57c00, #b05e0d);
+    }
+
+    .event-image {
+      height: 200px;
+      background: linear-gradient(135deg, #e8e8e8, #f5f5f5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #999;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.1));
+    }
+
+    .event-content {
+      padding: 1.5rem;
+    }
+
+    .event-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: linear-gradient(135deg, #ff8c00, #f57c00);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .event-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #3e2f1c;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .event-date {
+      color: #b05e0d;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .event-description {
+      color: #5e4b32;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #e0d5c7;
+    }
+
+    .event-participants {
+      font-size: 0.9rem;
+      color: #5e4b32;
+    }
+
+    .event-status {
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-open {
+      background: #e8f5e8;
+      color: #2d5a2d;
+    }
+
+    .status-filling {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-full {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .events-hero {
+        padding: 2rem 1rem;
+      }
+
+      .events-container {
+        padding: 2rem 1rem;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .event-card {
+        margin: 0 auto;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">AKRIVYA</div>
+      <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="events-hero">
+    <h1>Community Events</h1>
+    <p>Join hands with fellow changemakers. Together, we create impact that matters.</p>
+  </section>
+
+  <!-- Events Container -->
+  <div class="events-container">
+    <div class="events-grid">
+      
+      <!-- Featured Event: Temple Cleanup -->
+      <div class="event-card" onclick="window.location.href='temple-cleanup-event.html'">
+        <div class="event-image">🕉️</div>
+        <div class="event-content">
+          <div class="event-badge">Featured Event</div>
+          <h3 class="event-title">Sacred Spaces, Clean Spaces: Temple Ground Restoration</h3>
+          <div class="event-date">📅 Saturday, December 21, 2024 • 7:00 AM - 12:00 PM</div>
+          <p class="event-description">
+            Join us for a meaningful morning of service as we restore our beloved campus temple grounds. 
+            This is about preserving sacred spaces with dignity and community spirit.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">42 volunteers joined</div>
+            <div class="event-status status-open">Open</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 2: Beach Cleanup -->
+      <div class="event-card" onclick="alert('Event page coming soon!')">
+        <div class="event-image">🌊</div>
+        <div class="event-content">
+          <div class="event-badge">Environmental</div>
+          <h3 class="event-title">Coastal Conservation Drive</h3>
+          <div class="event-date">📅 Sunday, December 29, 2024 • 6:00 AM - 11:00 AM</div>
+          <p class="event-description">
+            Protect our coastline and marine life. Experience the sunrise while making a difference 
+            for our ocean ecosystem and coastal communities.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">28 volunteers joined</div>
+            <div class="event-status status-filling">Filling Fast</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 3: Tree Plantation -->
+      <div class="event-card" onclick="alert('Event page coming soon!')">
+        <div class="event-image">🌳</div>
+        <div class="event-content">
+          <div class="event-badge">Green Initiative</div>
+          <h3 class="event-title">Campus Green Revolution</h3>
+          <div class="event-date">📅 Saturday, January 4, 2025 • 8:00 AM - 1:00 PM</div>
+          <p class="event-description">
+            Plant the seeds of tomorrow! Join our campus-wide tree plantation drive and create 
+            green lungs for future generations of students.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">67 volunteers joined</div>
+            <div class="event-status status-open">Open</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 4: E-waste Collection -->
+      <div class="event-card" onclick="alert('Event page coming soon!')">
+        <div class="event-image">⚡</div>
+        <div class="event-content">
+          <div class="event-badge">Technology</div>
+          <h3 class="event-title">Digital Detox & E-Waste Drive</h3>
+          <div class="event-date">📅 Friday, January 10, 2025 • 10:00 AM - 4:00 PM</div>
+          <p class="event-description">
+            Responsibly dispose of electronic waste while learning about sustainable technology 
+            practices. Turn your old gadgets into environmental action.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">15 volunteers joined</div>
+            <div class="event-status status-open">Open</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 5: Community Kitchen -->
+      <div class="event-card" onclick="alert('Event page coming soon!')">
+        <div class="event-image">🍽️</div>
+        <div class="event-content">
+          <div class="event-badge">Social Impact</div>
+          <h3 class="event-title">Seva Kitchen: Meal Distribution Drive</h3>
+          <div class="event-date">📅 Sunday, January 12, 2025 • 9:00 AM - 2:00 PM</div>
+          <p class="event-description">
+            Cook, serve, and spread joy! Help prepare and distribute nutritious meals to 
+            underprivileged communities around our campus.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">35 volunteers joined</div>
+            <div class="event-status status-filling">Filling Fast</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 6: Educational Workshop -->
+      <div class="event-card" onclick="alert('Event page coming soon!')">
+        <div class="event-image">📚</div>
+        <div class="event-content">
+          <div class="event-badge">Education</div>
+          <h3 class="event-title">Knowledge Bridge: Teach & Learn Initiative</h3>
+          <div class="event-date">📅 Saturday, January 18, 2025 • 2:00 PM - 6:00 PM</div>
+          <p class="event-description">
+            Share your skills and learn from others! Interactive workshops where students 
+            teach underprivileged children and learn life skills in return.
+          </p>
+          <div class="event-meta">
+            <div class="event-participants">22 volunteers joined</div>
+            <div class="event-status status-open">Open</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Add staggered animation to event cards
+    document.addEventListener('DOMContentLoaded', function() {
+      const eventCards = document.querySelectorAll('.event-card');
+      eventCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+
+    // Add hover sound effect (optional)
+    document.querySelectorAll('.event-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>
