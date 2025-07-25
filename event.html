@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akrivya Cleanup Event</title>
+  <style>
+    /* Root Theme — matches home/event palette */
+    :root{
+      --orange:#ff8c00;
+      --orange-dark:#e65100;
+      --cream:#fff9ea;
+      --brown:#3e2f1c;
+      --tan:#ffecd2;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:linear-gradient(135deg,var(--cream) 0%,var(--tan) 100%);
+      color:var(--brown);
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    h2{font-size:2.2rem;margin-bottom:1rem;}
+    section{padding:4rem 5vw;position:relative;}
+
+    /* 1. Full-screen parallax header */
+    .hero{
+      height:100vh;overflow:hidden;position:relative;
+    }
+    .slide{
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      background-size:cover;background-position:center;
+      animation:parallax 30s infinite alternate linear;
+    }
+    .slide::after{
+      content:attr(data-headline);
+      position:absolute;bottom:10%;left:50%;transform:translateX(-50%);
+      color:#fff;font-size:clamp(1.5rem,4vw,3rem);font-weight:700;
+      text-shadow:0 3px 8px rgba(0,0,0,.4);white-space:nowrap;
+    }
+    @keyframes parallax{
+      from{transform:scale(1) translateX(0);}
+      to{transform:scale(1.05) translateX(-3%);}
+    }
+
+    /* 2. Hook reveal */
+    .reveal{display:flex;align-items:center;gap:4vw;min-height:60vh;}
+    .reveal:nth-child(even){flex-direction:row-reverse;}
+    .reveal img{width:45%;border-radius:15px;filter:brightness(.9);}
+    .reveal-text{flex:1;opacity:0;transform:translateY(40px);
+      transition:all .8s ease;}
+    .reveal.visible .reveal-text{opacity:1;transform:translateY(0);}
+    .reveal h3{font-size:1.8rem;color:var(--orange);margin-bottom:.8rem;}
+
+    /* 3. Injustice */
+    .injustice{background:#fff;padding:3rem 5vw;text-align:center;}
+    .injustice p{font-size:1.3rem;color:var(--brown);}
+    .injustice em{display:block;margin-top:.5rem;font-size:.9rem;}
+
+    /* 4. Map animation placeholder */
+    .map-sec{background:#000;position:relative;height:60vh;border-radius:15px;overflow:hidden;}
+    .map-sec img{width:100%;height:100%;object-fit:cover;opacity:.6;}
+    .map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;text-align:center;padding:0 2rem;}
+    .map-overlay h2{color:#fff;}
+    .map-overlay p{max-width:600px;}
+
+    /* 5. Impact cards */
+    .impact{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;}
+    .card{
+      flex:1 1 220px;background:#fff;border-radius:15px;padding:1.5rem;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);position:relative;overflow:hidden;
+    }
+    .card span{font-size:2rem;font-weight:700;color:var(--orange);}
+    .card p{margin-top:.4rem;font-size:.9rem;}
+
+    /* 6. Safety section */
+    .safety{display:flex;flex-wrap:wrap;align-items:center;gap:3vw;}
+    .safety img{width:160px;animation:pop 1s ease forwards;opacity:0;}
+    .safety img:nth-child(1){animation-delay:.2s;}
+    .safety img:nth-child(2){animation-delay:.4s;}
+    @keyframes pop{to{transform:scale(1.05);opacity:1;}}
+    .safety-text{flex:1;min-width:240px;}
+
+    /* 7. Mission */
+    .mission{text-align:center;background:#fff;border-radius:15px;}
+    .mission p{max-width:700px;margin-inline:auto;}
+
+    /* 8. Details & CTA */
+    .details{display:grid;gap:1rem;max-width:500px;margin:0 auto;text-align:center;}
+    .details ul{list-style:none;margin-bottom:1rem;}
+    .cta-btn{
+      display:inline-block;background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+      color:#fff;padding:.9rem 2.5rem;border:none;border-radius:50px;
+      font-weight:600;cursor:pointer;transition:transform .3s;
+    }
+    .cta-btn:hover{transform:translateY(-3px);}
+
+    /* Scroll reveal observer helper */
+    @media(prefers-reduced-motion:no-preference){
+      .observe{opacity:0;transform:translateY(40px);transition:all .8s ease;}
+      .observe.show{opacity:1;transform:translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Full-screen Scroll Header -->
+  <header class="hero">
+    <div class="slide" style="background-image:url('img1.jpg')" data-headline="Dummy headline 1"></div>
+    <div class="slide" style="animation-delay:-6s;background-image:url('img2.jpg')" data-headline="Dummy headline 2"></div>
+    <div class="slide" style="animation-delay:-12s;background-image:url('img3.jpg')" data-headline="Dummy headline 3"></div>
+    <div class="slide" style="animation-delay:-18s;background-image:url('img4.jpg')" data-headline="Dummy headline 4"></div>
+  </header>
+
+  <!-- 2. Hook Sections -->
+  <section class="observe reveal">
+    <img src="hook1.jpg" alt="Youth volunteering">
+    <div class="reveal-text">
+      <h3>Clean Hands, Clear Hearts</h3>
+      <p>Students step up—not to scavenge, but to honor sacred spaces with modern care.</p>
+      <p>Every sweep, every sorted bag is a badge of dignity and pride.</p>
+    </div>
+  </section>
+
+  <section class="observe reveal">
+    <img src="hook2.jpg" alt="Tools ready">
+    <div class="reveal-text">
+      <h3>Tools, Tech & Teamwork</h3>
+      <p>Armed with gloves, masks, and smart logistics, we tackle waste efficiently.</p>
+      <p>No one’s future should be defined by trash—together we reshape the narrative.</p>
+    </div>
+  </section>
+
+  <!-- 3. Emotional Validation -->
+  <section class="injustice observe">
+    <h2>Something’s Off.</h2>
+    <p>Why should vibrant temple pathways stay shadowed by forgotten waste piles?</p>
+    <em>(Imagine a photo here: two overflowing bins against serene greenery.)</em>
+  </section>
+
+  <!-- 4. Proof & Map Animation -->
+  <section class="observe">
+    <div class="map-sec">
+      <img src="map-placeholder.jpg" alt="Google Maps dummy">
+      <div class="map-overlay">
+        <h2>Zooming Into the Problem</h2>
+        <p>Animated lines highlight neglected corners. Pop-ups reveal flower heaps, plastic packets, and incense ash waiting for a second life.</p>
+        <p>Watch as the map pans from shrine gate to riverbank, showcasing every cleanup spot.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Data Visualization -->
+  <section class="observe">
+    <h2>Cleanup Impact (Projected)</h2>
+    <div class="impact">
+      <div class="card"><span>32 kg</span><p>plastic saved from open burning</p></div>
+      <div class="card"><span>12 kg</span><p>wood & flowers composted</p></div>
+      <div class="card"><span>₹1,200</span><p>value reclaimed for recycling</p></div>
+      <div class="card"><span>60 kg+</span><p>total recoverable material</p></div>
+    </div>
+  </section>
+
+  <!-- 6. Safety & Tools -->
+  <section class="safety observe">
+    <img src="gloves.jpg" alt="Protective gloves">
+    <img src="mask.jpg" alt="Protective mask">
+    <div class="safety-text">
+      <h2>Safety First, Always</h2>
+      <p>We supply certified gloves & masks, brief you on quick-clean methods, and wrap up in just 2 hours—guided by experienced leads.</p>
+    </div>
+  </section>
+
+  <!-- 7. Akrivya’s Mission -->
+  <section class="mission observe">
+    <h2>Akrivya’s Mission</h2>
+    <p>Dignified environmental action rooted in culture, fueled by youth. We protect sacred heritage while nurturing the planet—one respectful act at a time.</p>
+  </section>
+
+  <!-- 8. Event Details & CTA -->
+  <section class="observe">
+    <h2>Event Details</h2>
+    <div class="details">
+      <ul>
+        <li><strong>Date:</strong> 25 Aug 2024</li>
+        <li><strong>Time:</strong> 8 AM – 10 AM</li>
+        <li><strong>Location:</strong> Lotus Temple Grounds</li>
+      </ul>
+      <ul>
+        <li><strong>Bring:</strong> Cap, reusable water bottle</li>
+        <li><strong>We Provide:</strong> Gloves, mask, collection bags</li>
+      </ul>
+      <p>Rewards: Certificate, volunteer credits, social media spotlight.</p>
+      <button class="cta-btn">Count Me In!</button>
+    </div>
+  </section>
+
+  <script>
+    /* Intersection Observer for reveals */
+    const obsOptions={threshold:.3};
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+          if(e.target.classList.contains('reveal')) e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },obsOptions);
+    document.querySelectorAll('.observe').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
